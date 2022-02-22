@@ -1,39 +1,100 @@
 import { useRouter } from 'next/router';
 import useSWR, { useSWRConfig } from 'swr';
-import { Reaction } from 'types';
+import { Reaction, User } from 'types';
 import { useAuth } from 'components/context/auth';
 import cn from 'classnames';
 import { types } from 'api/reactions/[slug]';
+import { useEffect, useState } from 'react';
+import { AddReaction } from './hooks/hooks';
+import { AnimatePresence, motion } from 'framer-motion';
 
 async function fetcher(arg: any, ...args: any) {
   const res = await fetch(arg, ...args);
   return res.json();
 }
 
-const Reaction = ({ reaction, slug }: { reaction: Reaction; slug: string }) => {
-  const { mutate } = useSWRConfig();
+const Reaction = ({
+  reaction,
+  slug,
+  users,
+  loading,
+}: {
+  reaction: Reaction;
+  slug: string;
+  users: User[];
+  loading: boolean;
+}) => {
   const { user, login } = useAuth();
-  const isLiked = reaction.users.find((us) => us === user?.uid);
+  const [liked, setLiked] = useState(false);
+  const { mutate } = useSWRConfig();
+
   const handleAction = async () => {
-    if (user === null) await login();
-    if (user === undefined) return;
+    if (user === null || user === undefined) return login();
+    if (loading) return;
+    mutate(
+      `/api/reactions/${slug}`,
+      async (data: { reactions: Reaction[]; users: User[] }) =>
+        AddReaction(data, user.uid, reaction.name),
+      false
+    );
     await fetch(`/api/reactions/${slug}?type=${reaction.name}&user=${user?.uid}`, {
       method: 'POST',
     });
     mutate(`/api/reactions/${slug}`);
   };
+  useEffect(() => {
+    const u = users?.find((u) => u.id === user?.uid);
+    setLiked(u?.reaction === reaction.name);
+  }, [users, reaction.name, user]);
+
   return (
     <button
       onClick={handleAction}
-      className={cn(
-        'flex h-32 w-full flex-col items-center justify-center rounded-lg ',
-        isLiked
-          ? 'bg-zinc-100 outline outline-yellow-500 dark:bg-zinc-700 dark:outline-yellow-200'
-          : '  bg-zinc-100 dark:bg-zinc-900'
-      )}>
-      <div className="text-4xl">{reaction.emoji}</div>
-      <p className="text-lg font-bold">{reaction.value}</p>
-      <p className="uppercase">{reaction.name}</p>
+      className="group relative flex h-16 w-full items-center gap-2 rounded-full
+      bg-gray-100 bg-opacity-30 p-2 dark:bg-gray-900 dark:bg-opacity-70 ">
+      <div
+        className={cn(
+          liked ? 'grayscale-0' : 'grayscale',
+          'z-20 text-2xl group-hover:grayscale-0 md:text-4xl'
+        )}>
+        {reaction.emoji}
+      </div>
+      <AnimatePresence exitBeforeEnter>
+        {liked && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className={cn(
+              'absolute left-0 z-10 h-full w-full rounded-full border-4  border-opacity-50',
+              reaction.name === 'Love' && 'border-red-500 bg-red-500 bg-opacity-30',
+              reaction.name === 'Sparkles' && 'border-yellow-500 bg-yellow-500 bg-opacity-30',
+              reaction.name === 'Like' && 'border-green-500 bg-green-500 bg-opacity-30',
+              reaction.name === 'Dislike' && 'border-indigo-500 bg-indigo-500 bg-opacity-30'
+            )}
+            layoutId="outline-reactions"
+          />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence exitBeforeEnter>
+        {loading ? (
+          <motion.div
+            exit={{ scale: 4, opacity: 0 }}
+            className="h-4 w-4 animate-ping rounded-full bg-white bg-opacity-30"
+          />
+        ) : (
+          <motion.p
+            exit={{ opacity: 0, y: -30 }}
+            initial={{ y: 30, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ ease: 'easeInOut' }}
+            className="z-20 text-lg font-semibold"
+            key={reaction.value}>
+            {reaction.value}
+          </motion.p>
+        )}
+      </AnimatePresence>
     </button>
   );
 };
@@ -43,16 +104,21 @@ export default function BlogReactions() {
 
   const { data } = useSWR(`/api/reactions/${router.query.slug}`, fetcher);
   let reactions = data?.reactions as Reaction[];
+  const users = data?.users as User[];
   if (reactions === undefined) reactions = types;
   return (
-    <div className="px-4 lg:w-1/4">
-      <div className="sticky top-12 flex flex-col gap-4 ">
-        <p className="text-center text-xl font-semibold tracking-tight text-black dark:text-white md:text-2xl">
-          Article Reactions
-        </p>
-        <div className=" grid grid-cols-4 gap-3 lg:grid-cols-2 lg:grid-rows-2">
+    <div className="mt-12 px-8 lg:mt-0 lg:w-1/4 lg:px-0">
+      <div className="sticky top-12 flex flex-col">
+        <h1 className="mb-6 text-center font-medium uppercase tracking-widest">Reactions</h1>
+        <div className="grid grid-cols-2 gap-4 ">
           {reactions?.map((react) => (
-            <Reaction reaction={react} key={react.name} slug={router.query.slug as string} />
+            <Reaction
+              reaction={react}
+              users={users}
+              key={react.name}
+              loading={data === undefined}
+              slug={router.query.slug as string}
+            />
           ))}
         </div>
       </div>

@@ -40,9 +40,9 @@ export default function BlogLayout({
           ],
         }}
       />
-      <article className=" mx-auto mt-24 flex max-w-6xl flex-col lg:flex-row lg:gap-8 lg:px-4">
+      <article className="mx-auto mt-24 flex max-w-6xl flex-col pb-12 lg:flex-row lg:gap-8 lg:px-4">
         <div className="min-w-0 lg:w-3/4">
-          <div className="flex flex-col items-center ">
+          <div className=" flex flex-col items-center">
             <h1 className="text-center text-3xl font-bold tracking-tight text-black dark:text-white md:text-5xl">
               {Post.title[0].plain_text}
             </h1>
@@ -57,12 +57,12 @@ export default function BlogLayout({
               <BlogViewCounter slug={Slug.rich_text[0].plain_text} register={true} />
             </div>
 
-            <div className="relative mb-6 h-[50vh] w-full">
+            <div className="relative mb-6  h-[50vh] w-full ">
               <Image
                 layout="fill"
                 src={imageSrc}
                 objectFit="cover"
-                className="lg:rounded-xl"
+                className="md:rounded-xl"
                 alt={Post.title[0].plain_text}
               />
             </div>

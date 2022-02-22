@@ -8,7 +8,7 @@ const Footer = () => {
   return (
     <div className="bg-white bg-opacity-10 px-6 dark:bg-black dark:bg-opacity-30 lg:-ml-20 lg:w-[calc(100vw_-_17px)] ">
       <div className=" mx-auto flex max-w-6xl flex-col items-center gap-12 px-12  py-10 sm:flex-row ">
-        <div className="relative aspect-square h-24 overflow-hidden rounded-full border-t-2 border-l-2 border-white border-opacity-20">
+        <div className=" relative aspect-square  h-24 overflow-hidden rounded-full">
           <Image
             layout="fill"
             src="/images/logo.jpg"

@@ -1,23 +1,26 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Post } from 'types';
 import BlogViewCounter from './BlogViewCounter';
 import { PropertyImage } from './ContentBlocks';
-import cn from 'classnames';
+import { CustomCursorContext } from './context/cursor';
 
 const BlogPostCard = ({ post }: { post: Post }) => {
   const {
     properties: { Post, Description, Slug, Cover, Type },
     color,
   } = post;
+  const { setType } = useContext(CustomCursorContext);
   return (
     <Link href={`/blog/${Slug.rich_text[0].plain_text}`} passHref>
       <a
         className="relative flex flex-col-reverse overflow-hidden rounded-lg outline 
           outline-2 lg:flex-row"
-        style={{ outlineColor: `rgb(${color.join(', ')})` }}>
+        style={{ outlineColor: `rgb(${color.join(', ')})` }}
+        onMouseEnter={() => setType('none')}
+        onMouseLeave={() => setType('default')}>
         <motion.div
           className="absolute z-20 h-full w-full bg-red-500"
           style={{ backgroundColor: `rgb(${color.join(', ')})` }}
@@ -36,12 +39,9 @@ const BlogPostCard = ({ post }: { post: Post }) => {
               <BlogViewCounter slug={Slug.rich_text[0].plain_text} register={false} />
             </div>
             <p
-              className={cn(
-                Type.select?.name === 'Project'
-                  ? 'bg-blue-200 dark:bg-blue-900'
-                  : 'bg-red-200 dark:bg-red-900',
-                'absolute right-0 z-10 mr-3 rounded-full bg-opacity-50 px-6 py-2  tracking-widest backdrop-blur-lg  dark:bg-opacity-30'
-              )}>
+              className="absolute right-0 z-10 mr-3 rounded-full px-6 py-2 text-sm 
+             font-thin uppercase tracking-widest text-white backdrop-blur-lg"
+              style={{ backgroundColor: `rgba(${color.join(', ')},0.5)` }}>
               {Type.select?.name}
             </p>
           </div>

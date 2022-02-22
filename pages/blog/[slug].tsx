@@ -17,7 +17,7 @@ const Post: BlogPost = ({ page, blocks }) => {
   }
   return (
     <BlogLayout page={page} openGraphImage={imageURL}>
-      <div className="flex flex-col px-4 lg:px-0">
+      <div className="flex flex-col px-8 lg:px-0">
         {blocks.map((block) => (
           <BlockContent block={block} key={block.id} />
         ))}

@@ -1,8 +1,11 @@
 import Image from 'next/image';
-import { useContext, useEffect } from 'react';
+import Highlight, { defaultProps } from 'prism-react-renderer';
+import { useContext } from 'react';
 import { PropertyValueFiles, Block, RichTextText, ImageBlock, BlockImage } from 'types';
-import prism from 'prismjs';
 import { CustomCursorContext } from './context/cursor';
+import dark from 'prism-react-renderer/themes/nightOwl';
+import light from 'prism-react-renderer/themes/nightOwlLight';
+import { useTheme } from 'next-themes';
 
 const SpanText = ({ text, id }: { text: RichTextText[]; id: string }) => {
   if (!text) return null;
@@ -17,7 +20,7 @@ const SpanText = ({ text, id }: { text: RichTextText[]; id: string }) => {
           <span
             key={id + i}
             className={[
-              bold ? 'font-bold' : '',
+              bold ? 'font-bold' : 'font-normal',
               code ? 'font-mono rounded-xs bg-zinc-100 p-1 text-sm dark:bg-zinc-800' : '',
               italic ? 'italic' : '',
               strikethrough ? 'line-through' : '',
@@ -58,19 +61,19 @@ export const Heading = ({ text, level }: { text: RichTextText[]; level: string }
   switch (level) {
     case 'heading_1':
       return (
-        <h1 className="my-2 text-3xl font-bold tracking-tight text-black dark:text-white md:text-5xl">
+        <h1 className="my-4 text-3xl font-bold tracking-tight text-black dark:text-white md:text-5xl">
           {text[0].text.content}
         </h1>
       );
     case 'heading_2':
       return (
-        <h2 className="my-2 text-2xl font-bold tracking-tight text-black dark:text-white md:text-3xl">
+        <h2 className="my-4 text-2xl font-bold tracking-tight text-black dark:text-white md:text-3xl">
           {text[0].text.content}
         </h2>
       );
     case 'heading_3':
       return (
-        <h3 className="my-2 text-lg font-bold tracking-tight text-black dark:text-white md:text-xl">
+        <h3 className="my-4 text-lg font-bold tracking-tight text-black dark:text-white md:text-xl">
           {text[0].text.content}
         </h3>
       );
@@ -117,12 +120,11 @@ export const Toggle = ({
     </details>
   );
 };
+
 export const BlockContent = ({ block }: { block: Block }) => {
   const { type, id } = block;
   const { setType } = useContext(CustomCursorContext);
-  useEffect(() => {
-    prism.highlightAll();
-  }, []);
+  const { resolvedTheme } = useTheme();
   switch (type) {
     case 'paragraph':
       return <Text text={block.paragraph.text as RichTextText[]} id={id} key={id} />;
@@ -177,14 +179,26 @@ export const BlockContent = ({ block }: { block: Block }) => {
       );
     case 'code':
       return (
-        <div className="overflow-auto">
-          <pre
-            className="language-js overflow-visible rounded-lg"
-            onMouseEnter={() => setType('none')}
-            onMouseLeave={() => setType('default')}>
-            <code className="language-js">{block.code.text[0].plain_text}</code>
-          </pre>
-        </div>
+        <Highlight
+          {...defaultProps}
+          code={block.code.text[0].plain_text}
+          theme={resolvedTheme === 'light' ? light : dark}
+          language="jsx">
+          {({ tokens, getLineProps, getTokenProps }) => (
+            <pre
+              className="mt-8 mb-8 overflow-auto rounded-lg bg-white bg-opacity-50 p-4 text-sm dark:bg-black dark:bg-opacity-20"
+              onMouseEnter={() => setType('none')}
+              onMouseLeave={() => setType('default')}>
+              {tokens.map((line, i) => (
+                <div key={i} {...getLineProps({ line, key: i })}>
+                  {line.map((token, key) => (
+                    <span key={key} {...getTokenProps({ token, key })} />
+                  ))}
+                </div>
+              ))}
+            </pre>
+          )}
+        </Highlight>
       );
     default:
       return (

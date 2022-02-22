@@ -1,6 +1,6 @@
 import { FirebaseApp, getApps, getApp, initializeApp } from 'firebase/app';
 import { collection, CollectionReference, DocumentData, getFirestore } from 'firebase/firestore';
-import { Reaction } from 'types';
+import { Reaction, User } from 'types';
 let app: FirebaseApp;
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -21,4 +21,4 @@ const createCollection = <T = DocumentData>(collectionName: string) => {
 };
 
 export const viewsCol = createCollection<{ views: number }>('views');
-export const reactionsCol = createCollection<{ reactions: Reaction[] }>('reactions');
+export const reactionsCol = createCollection<{ reactions: Reaction[]; users: User[] }>('reactions');

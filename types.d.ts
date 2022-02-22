@@ -32,9 +32,11 @@ export declare type Reaction = {
   name: string;
   emoji: string;
   value: number;
-  users: string[];
 };
-
+export declare type User = {
+  id: string;
+  reaction: string;
+};
 /** Property **/
 export declare type PostResult = Extract<
   QueryDatabaseResponse['results'][number],

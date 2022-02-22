@@ -67,7 +67,7 @@ const Projects: ProjectsPage = ({ posts }) => {
         canonical={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/blog`}
       />
 
-      <div className="mx-auto mt-24 flex w-full max-w-6xl flex-col px-4 ">
+      <div className="mx-auto mt-24 flex w-full max-w-6xl flex-col px-4 pb-12">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
           <h1 className="text-3xl font-bold tracking-tighter md:text-5xl">Blog</h1>
           <div
@@ -114,9 +114,8 @@ const Projects: ProjectsPage = ({ posts }) => {
 
 export const getStaticProps: GetStaticProps = async () => {
   const database = (await getNotionData(process.env.NOTION_DATABASE_ID as string)) as Post[];
-  const posts = database.slice(0, 3);
   const postsWithColors = await Promise.all(
-    posts.map(async (post) => {
+    database.map(async (post) => {
       const color = await Vibrant(post?.properties.Cover as PropertyValueFiles);
       return {
         ...post,

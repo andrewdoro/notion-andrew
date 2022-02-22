@@ -1,11 +1,14 @@
 import { useState, useEffect, FC, useContext } from 'react';
 import { useRouter } from 'next/dist/client/router';
 import { useTheme } from 'next-themes';
-import cn from 'classnames';
+import Link from 'next/link';
+
+import { CustomCursorContext } from './context/cursor';
+
 import { HomeIcon, AboutIcon, ProjectsIcon, MenuIcon } from './Icons';
 import { motion, Variants, useAnimation, AnimatePresence } from 'framer-motion';
-import { CustomCursorContext } from './context/cursor';
-import Link from 'next/link';
+import { useMediaQuery } from './hooks/hooks';
+import cn from 'classnames';
 
 interface NavItemProps {
   href: string;
@@ -142,7 +145,7 @@ export default function Navbar() {
         )}
       </AnimatePresence>
       <motion.div
-        className="fixed z-[100] flex h-screen items-center opacity-0 lg:static lg:opacity-100 "
+        className="fixed z-[100] flex h-screen items-center opacity-0 lg:sticky lg:top-0 lg:opacity-100 "
         animate={controls}
         variants={drawer}>
         <nav className="z-10 flex flex-col items-center justify-center gap-6 px-4 ">
@@ -153,7 +156,7 @@ export default function Navbar() {
             aria-label="Toggle Dark Mode"
             type="button"
             className="flex h-12 w-12 items-center justify-center rounded-full bg-zinc-100 ring-gray-400
-               transition-all hover:ring-2 dark:bg-zinc-900 dark:ring-gray-300"
+               hover:ring-2 dark:bg-zinc-900 dark:ring-gray-300"
             onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}>
             {mounted && (
               <svg
@@ -184,22 +187,4 @@ export default function Navbar() {
       </motion.div>
     </>
   );
-}
-
-function useMediaQuery(query: string) {
-  const [matches, setMatches] = useState(false);
-
-  useEffect(() => {
-    const media = window.matchMedia(query);
-    if (media.matches !== matches) {
-      setMatches(media.matches);
-    }
-    const listener = () => {
-      setMatches(media.matches);
-    };
-    media.addEventListener('change', listener);
-    return () => media.removeEventListener('change', listener);
-  }, [matches, query]);
-
-  return matches;
 }

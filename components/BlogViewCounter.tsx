@@ -1,3 +1,4 @@
+import { motion, Transition, Variants } from 'framer-motion';
 import { useEffect } from 'react';
 import useSWR from 'swr';
 
@@ -40,11 +41,55 @@ export default function BlogViewCounter({
       {views > 0 ? (
         <p className="tracking-wide">{views.toLocaleString()} views</p>
       ) : (
-        <>
-          <div className="absolute left-0 h-6 w-6 animate-ping rounded-full bg-red-500" />
-          <div className=" h-4 w-16 animate-pulse rounded-full bg-red-500 bg-opacity-30"></div>
-        </>
+        <motion.div
+          className="flex gap-1 rounded-full  py-1 px-2 "
+          variants={ContainerVariants}
+          initial="initial"
+          animate="animate">
+          <motion.div
+            className="h-2 w-2 rounded-full bg-yellow-500"
+            transition={DotTransition}
+            variants={DotVariants}></motion.div>
+          <motion.div
+            className="h-2 w-2 rounded-full bg-red-500"
+            transition={DotTransition}
+            variants={DotVariants}></motion.div>
+          <motion.div
+            className="h-2 w-2 rounded-full bg-green-500"
+            transition={DotTransition}
+            variants={DotVariants}></motion.div>
+          <motion.div
+            className="h-2 w-2 rounded-full bg-blue-500"
+            transition={DotTransition}
+            variants={DotVariants}></motion.div>
+        </motion.div>
       )}
     </div>
   );
 }
+const ContainerVariants: Variants = {
+  initial: {
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+  animate: {
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
+const DotVariants: Variants = {
+  initial: {
+    y: '-35%',
+  },
+  animate: {
+    y: '35%',
+  },
+};
+const DotTransition: Transition = {
+  duration: 0.5,
+  repeat: Infinity,
+  repeatType: 'reverse',
+  ease: 'easeInOut',
+};

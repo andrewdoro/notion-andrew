@@ -21,7 +21,7 @@ const About: Page = () => {
         canonical={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/about`}
         description="Hello, I'm Andrew, a self-taught front-end developer, currently living in Cluj-Napoca."
       />
-      <div className="mx-auto mt-24 h-full max-w-6xl  px-4">
+      <div className="mx-auto mt-24 h-full max-w-6xl px-4 pb-12">
         <div className="flex flex-col-reverse gap-8 md:flex-row">
           <div className="flex flex-col">
             <h1 className="text-3xl font-bold tracking-tighter md:text-5xl"> About me</h1>
