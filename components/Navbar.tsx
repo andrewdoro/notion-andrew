@@ -187,8 +187,9 @@ export default function Navbar() {
               </motion.button>
             ) : (
               <motion.div
+                key="placeholder"
                 exit={{ opacity: 0 }}
-                className="h-12 w-12 rounded-full bg-red-500 bg-opacity-30"></motion.div>
+                className="h-12 w-12 rounded-full bg-zinc-50 bg-opacity-20"></motion.div>
             )}
           </AnimatePresence>
         </nav>

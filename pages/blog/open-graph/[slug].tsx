@@ -64,6 +64,7 @@ const OpenGraphImage = ({ page }: { page: Post }) => {
                 layout="fill"
                 alt="Avatar Andrew"
                 objectFit="cover"
+                priority
                 className="rounded-full"
               />
             </div>
