@@ -69,7 +69,9 @@ const Projects: ProjectsPage = ({ posts }) => {
 
       <div className="mx-auto mt-24 flex w-full max-w-6xl flex-col px-4 pb-12">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-          <h1 className="text-3xl font-bold tracking-tighter md:text-5xl">Blog</h1>
+          <h1 className="text-3xl font-bold tracking-tighter text-black dark:text-white md:text-5xl">
+            Blog
+          </h1>
           <div
             className="mr-auto flex overflow-hidden rounded-full bg-zinc-200
            bg-opacity-40 backdrop-blur-lg dark:bg-zinc-900 dark:bg-opacity-40 sm:mr-0 sm:ml-auto">
