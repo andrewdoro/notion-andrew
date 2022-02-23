@@ -1,5 +1,5 @@
 import { motion, Transition, Variants } from 'framer-motion';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 
 async function fetcher(arg: any, ...args: any) {
@@ -15,6 +15,13 @@ export default function BlogViewCounter({
   register: boolean;
 }) {
   const { data } = useSWR(`/api/views/${slug}`, fetcher);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(data === undefined), 1250);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [data]);
   const views = new Number(data?.total);
   useEffect(() => {
     const registerView = () => {
@@ -38,7 +45,7 @@ export default function BlogViewCounter({
           clipRule="evenodd"
         />
       </svg>
-      {views > 0 ? (
+      {!loading ? (
         <p className="tracking-wide">{views.toLocaleString()} views</p>
       ) : (
         <motion.div

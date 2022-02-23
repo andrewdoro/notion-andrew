@@ -16,7 +16,7 @@ const Home: HomePage = ({ posts }) => {
   return (
     <>
       <div className="mt-8 grid grid-cols-1 gap-6 md:mt-0 md:grid-cols-2">
-        <div className="flex h-full flex-col items-center justify-center px-4 text-center ">
+        <div className="flex h-full flex-col items-center justify-center px-8 text-center ">
           <div className="relative h-36 w-36">
             <Image
               src="/images/avatar.jpg"
@@ -27,7 +27,7 @@ const Home: HomePage = ({ posts }) => {
             />
           </div>
           <div className="mt-4 flex flex-col">
-            <h1 className="max-w-xl text-3xl font-bold tracking-tighter text-black dark:text-white lg:text-5xl">
+            <h1 className="max-w-xl text-3xl font-bold tracking-tighter text-black dark:text-white lg:text-4xl xl:text-5xl">
               I am{' '}
               <Link href="/about">
                 <a
@@ -37,22 +37,22 @@ const Home: HomePage = ({ posts }) => {
                   Andrew
                 </a>
               </Link>
-              , a front-end developer, blogger and economics student.
+              , a front-end developer.
             </h1>
           </div>
           <div className="mt-4 flex flex-col">
-            <h2 className="text-xl font-bold tracking-tight text-gray-500 dark:text-gray-400  lg:px-24 lg:text-3xl ">
+            <h2 className="text-2xl font-bold tracking-tight text-gray-500 dark:text-gray-400 lg:px-24  lg:text-3xl xl:text-4xl ">
               I love to share my
               <span className="block">
                 <span className="block">knowledge </span> through{' '}
                 <span className="relative block">
                   code
-                  <BiPyramid className="absolute inset-x-0 -bottom-5 mx-auto rotate-180" />
+                  <BiPyramid className="absolute inset-x-0 -bottom-4 mx-auto rotate-180 lg:-bottom-6" />
                 </span>
                 .
               </span>
             </h2>
-            <p className="relative mt-8 text-lg tracking-widest text-gray-400">
+            <p className="relative mx-auto mt-8 max-w-xs text-sm tracking-widest text-gray-400">
               Check out a few of my most recent{' '}
               <Link href="/blog">
                 <a
@@ -67,7 +67,7 @@ const Home: HomePage = ({ posts }) => {
         </div>
         <div className="grid h-[70vh] w-full grid-cols-2 grid-rows-2 md:h-screen ">
           {posts.map((post, index) => (
-            <PostCard key={post.id} post={post} last={index === posts.length - 1} index={index} />
+            <PostCard key={post.id} post={post} last={index === posts.length - 1} />
           ))}
         </div>
       </div>

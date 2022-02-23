@@ -6,6 +6,8 @@ import { NextSeo } from 'next-seo';
 import Image from 'next/image';
 import { PropsWithChildren } from 'react';
 import { Post } from 'types';
+import { FacebookShareButton, LinkedinShareButton, TwitterShareButton } from 'next-share';
+import { SiFacebook, SiLinkedin, SiTwitter } from 'react-icons/si';
 
 export default function BlogLayout({
   children,
@@ -42,7 +44,7 @@ export default function BlogLayout({
       />
       <article className="mx-auto mt-24 flex max-w-6xl flex-col pb-12 lg:flex-row lg:gap-8 lg:px-4">
         <div className="min-w-0 lg:w-3/4">
-          <div className=" flex flex-col items-center">
+          <div className="flex flex-col items-center px-4">
             <h1 className="text-center text-3xl font-bold tracking-tight text-black dark:text-white md:text-5xl">
               {Post.title[0].plain_text}
             </h1>
@@ -62,7 +64,9 @@ export default function BlogLayout({
                 layout="fill"
                 src={imageSrc}
                 objectFit="cover"
-                className="md:rounded-xl"
+                placeholder="blur"
+                blurDataURL={imageSrc + '?tr=n-blur_thumbnail'}
+                className="rounded-xl"
                 alt={Post.title[0].plain_text}
               />
             </div>
@@ -70,7 +74,33 @@ export default function BlogLayout({
 
           {children}
         </div>
-        <BlogReactions />
+        <div className="mt-12 flex flex-col px-4 lg:-mt-24 lg:w-1/4 lg:px-0">
+          <div className="sticky top-0 flex flex-col justify-center lg:h-screen">
+            <BlogReactions />
+            <div className="mt-12 flex flex-col">
+              <h1 className="mb-6  text-center font-medium uppercase tracking-widest">
+                Share Post
+              </h1>
+
+              <div className="flex justify-center gap-6">
+                <TwitterShareButton
+                  url={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/blog/${Slug.rich_text[0].plain_text}`}>
+                  <SiTwitter className="text-3xl opacity-30 transition-opacity hover:opacity-100" />
+                </TwitterShareButton>
+                <FacebookShareButton
+                  url={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/blog/${Slug.rich_text[0].plain_text}`}
+                  quote={Description.rich_text[0].plain_text}
+                  hashtag={'#webdev'}>
+                  <SiFacebook className="text-3xl opacity-30 transition-opacity hover:opacity-100" />
+                </FacebookShareButton>
+                <LinkedinShareButton
+                  url={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/blog/${Slug.rich_text[0].plain_text}`}>
+                  <SiLinkedin className="text-3xl opacity-30 transition-opacity hover:opacity-100" />
+                </LinkedinShareButton>
+              </div>
+            </div>
+          </div>
+        </div>
       </article>
     </>
   );

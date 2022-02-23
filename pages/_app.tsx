@@ -46,6 +46,11 @@ function MyApp({ Component, pageProps, router }: AppProps) {
                 },
               ],
             }}
+            twitter={{
+              handle: '@andrewdorobantu',
+              site: '@notion-andrew.com',
+              cardType: 'summary_large_image',
+            }}
           />
           {loading && <LoadingScreen />}
           <Layout>

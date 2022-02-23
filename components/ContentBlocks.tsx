@@ -172,6 +172,8 @@ export const BlockContent = ({ block }: { block: Block }) => {
               objectFit="contain"
               width={image.size.width}
               height={image.size.height}
+              placeholder="blur"
+              blurDataURL={imageSrc + '?tr=n-blur_thumbnail'}
             />
           </div>
           {caption && <figcaption className="mt-2">{caption}</figcaption>}

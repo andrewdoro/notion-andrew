@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { SiFacebook, SiGithub, SiLinkedin } from 'react-icons/si';
+import { SiGithub, SiLinkedin, SiTwitter } from 'react-icons/si';
+import { Logo } from './Icons';
 const Footer = () => {
   const router = useRouter();
   if (router.pathname === '/') return <div></div>;
@@ -9,6 +10,9 @@ const Footer = () => {
     <div className="bg-white bg-opacity-10 px-6 dark:bg-black dark:bg-opacity-30 lg:-ml-20 lg:w-[calc(100vw_-_17px)] ">
       <div className=" mx-auto flex max-w-6xl flex-col items-center gap-12 px-12  py-10 sm:flex-row ">
         <div className=" relative aspect-square  h-24 overflow-hidden rounded-full">
+          <div className="absolute top-0 left-0 z-10 m-4 text-3xl opacity-30">
+            <Logo />
+          </div>
           <Image
             layout="fill"
             src="/images/logo.jpg"
@@ -46,8 +50,8 @@ const Footer = () => {
                 className="opacity-50 transition-opacity hover:opacity-100 "
                 target="_blank"
                 rel="noopener noreferrer"
-                href="https://www.facebook.com/simple.is.12/">
-                <SiFacebook className="text-2xl" />
+                href="https://twitter.com/andrewdorobantu">
+                <SiTwitter className="text-2xl" />
               </a>
               <a
                 className="opacity-50 transition-opacity hover:opacity-100 "

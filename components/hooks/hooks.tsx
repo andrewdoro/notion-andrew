@@ -18,6 +18,7 @@ export function useMediaQuery(query: string) {
 
   return matches;
 }
+
 export async function AddReaction(
   data: { reactions: Reaction[]; users: User[] },
   user: string,

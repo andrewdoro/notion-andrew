@@ -48,7 +48,14 @@ const BlogPostCard = ({ post }: { post: Post }) => {
         </div>
 
         <div className="relative h-64 lg:h-60 lg:w-1/2 ">
-          <Image layout="fill" src={PropertyImage(Cover)} alt="Project cover" objectFit="cover" />
+          <Image
+            layout="fill"
+            src={PropertyImage(Cover)}
+            placeholder="blur"
+            blurDataURL={PropertyImage(Cover) + '?tr=n-blur_thumbnail'}
+            alt="Project cover"
+            objectFit="cover"
+          />
         </div>
       </a>
     </Link>

@@ -10,7 +10,7 @@ import {
   SiMaterialui,
   SiLinkedin,
   SiGithub,
-  SiFacebook,
+  SiTwitter,
 } from 'react-icons/si';
 
 const About: Page = () => {
@@ -59,41 +59,34 @@ const About: Page = () => {
             <h2 className="mt-8 text-xl font-bold tracking-tight  md:text-3xl">Follow me</h2>
             <div className="mt-6 flex gap-6">
               <a
-                className="flex rounded-full border-2 border-blue-500 p-4 text-blue-500 transition-all hover:bg-blue-500"
-                href="https://www.facebook.com/simple.is.12/"
+                className="flex rounded-full border-2 border-blue-500 p-4 text-blue-500 transition-all duration-300 hover:bg-blue-500"
+                href="https://twitter.com/andrewdorobantu"
                 target="_blank"
                 rel="noopener noreferrer">
-                <SiFacebook className="text-3xl" />
+                <SiTwitter className="text-3xl" />
               </a>
               <a
-                className="flex rounded-full border-2 border-red-500 p-4 text-red-500 transition-all hover:bg-red-500"
+                className="flex rounded-full border-2 border-red-500 p-4 text-red-500 transition-all duration-300  hover:bg-red-500"
                 href="https://github.com/andrewdoro"
                 target="_blank"
                 rel="noopener noreferrer">
                 <SiGithub className="text-3xl" />
               </a>
               <a
-                className="flex rounded-full border-2 border-amber-500 p-4 text-amber-500 transition-all hover:bg-amber-500"
+                className="flex rounded-full border-2 border-amber-500 p-4 text-amber-500 transition-all duration-300 hover:bg-amber-500"
                 href="https://www.linkedin.com/in/andrei-ovidiu-dorobantu/"
                 target="_blank"
                 rel="noopener noreferrer">
                 <SiLinkedin className="text-3xl" />
               </a>
             </div>
-            <div
-              className="border-dark mt-12 flex h-14 w-full items-center justify-between 
-             overflow-hidden rounded-full  bg-gray-400 bg-opacity-10 dark:bg-black dark:bg-opacity-10">
-              <a
-                href="mailto:andreiovidiu9@yahoo.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex h-full items-center rounded-full bg-orange-500 bg-opacity-30 px-4 hover:bg-opacity-50">
-                <p className="dark:text-white-500 text-sm font-bold  md:text-base">Contact me</p>
-              </a>
-              <p className=" px-4 text-sm font-normal tracking-widest opacity-60  md:text-base">
-                andreiovidiu9@yahoo.com
-              </p>
-            </div>
+            <a
+              href="mailto:andreiovidiu9@yahoo.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-8 rounded-full bg-red-500 bg-opacity-30 px-4 py-3 transition-all hover:bg-opacity-50">
+              <p className="text-center font-semibold tracking-widest">Contact me</p>
+            </a>
           </div>
           <div className="relative mx-auto aspect-square w-1/2 lg:w-1/3  ">
             <Image

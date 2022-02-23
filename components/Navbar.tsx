@@ -29,15 +29,14 @@ const item: Variants = {
   view: {
     opacity: 1,
     transition: { delay: 0.3 },
+    scaleX: 1,
     x: 0,
   },
   hidden: {
-    opacity: 0,
-    x: 50,
+    scaleX: 0,
   },
   exit: {
-    opacity: 0,
-    x: 100,
+    scaleX: 0,
   },
 };
 
@@ -65,7 +64,7 @@ export const NavItem = ({ href, name, open, Icon, setOpen }: NavItemProps) => {
           <motion.p
             variants={item}
             transition={{ ease: 'easeInOut' }}
-            className="pointer-events-none absolute left-14 rounded-lg bg-zinc-50 px-2 py-3 text-base tracking-widest dark:bg-zinc-900 ">
+            className="pointer-events-none absolute left-14 rounded-lg bg-zinc-50 px-2 py-3 text-sm tracking-widest dark:bg-zinc-900 ">
             {name}
           </motion.p>
         )}
@@ -73,8 +72,8 @@ export const NavItem = ({ href, name, open, Icon, setOpen }: NavItemProps) => {
         <AnimatePresence exitBeforeEnter>
           {open && (
             <motion.p
-              className="absolute left-16 flex w-32 justify-center rounded-lg bg-zinc-50 py-3 text-base
-                tracking-widest group-hover:bg-zinc-200 dark:bg-zinc-900  dark:group-hover:bg-zinc-800"
+              className="absolute left-16 flex w-32 origin-top-left justify-center rounded-lg bg-zinc-50 py-3
+                text-base tracking-widest group-hover:bg-zinc-200 dark:bg-zinc-900  dark:group-hover:bg-zinc-800"
               initial="hidden"
               animate="view"
               exit="exit"
@@ -126,16 +125,16 @@ export default function Navbar() {
     <>
       <button
         aria-label="Menu"
-        className=" fixed top-0 left-0 z-[101] m-4 flex rounded-full
-        bg-zinc-100 p-3 text-2xl ring-gray-400 transition-shadow
-        hover:ring-2 dark:bg-zinc-900 dark:ring-gray-300 lg:hidden"
+        className=" fixed top-0 left-0 z-[90] m-6 flex rounded-full bg-red-100
+        p-3 text-2xl ring-red-400 transition-shadow
+        hover:ring-2 dark:bg-red-900 dark:ring-red-300 lg:hidden"
         onClick={() => setOpen(true)}>
         <MenuIcon />
       </button>
       <AnimatePresence exitBeforeEnter>
         {open && (
           <motion.div
-            className="fixed top-0 left-0 z-50 h-screen w-screen bg-black bg-opacity-30 backdrop-blur-sm"
+            className="fixed top-0 left-0 z-[91] h-screen w-screen bg-black bg-opacity-30 backdrop-blur-sm"
             onClick={() => setOpen(false)}
             variants={modal}
             initial="inactive"
@@ -147,8 +146,9 @@ export default function Navbar() {
       <motion.div
         className="fixed z-[100] flex h-screen items-center opacity-0 lg:sticky lg:top-0 lg:opacity-100 "
         animate={controls}
-        variants={drawer}>
-        <nav className="z-10 flex flex-col items-center justify-center gap-6 px-4 ">
+        variants={drawer}
+        transition={{ ease: 'easeInOut' }}>
+        <nav className="z-10 flex flex-col items-center justify-center gap-6 px-6 lg:px-4">
           <NavItem href="/" name="Home" Icon={HomeIcon} open={open} setOpen={setOpen} />
           <NavItem href="/blog" name="Blog" Icon={ProjectsIcon} open={open} setOpen={setOpen} />
           <NavItem href="/about" name="About" Icon={AboutIcon} open={open} setOpen={setOpen} />

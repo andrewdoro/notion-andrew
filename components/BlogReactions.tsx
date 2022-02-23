@@ -51,7 +51,7 @@ const Reaction = ({
     <button
       onClick={handleAction}
       className="group relative flex h-16 w-full items-center gap-2 rounded-full
-      bg-gray-100 bg-opacity-30 p-2 dark:bg-gray-900 dark:bg-opacity-70 ">
+      bg-zinc-100 bg-opacity-30 p-2 dark:bg-zinc-900 dark:bg-opacity-70 ">
       <div
         className={cn(
           liked ? 'grayscale-0' : 'grayscale',
@@ -107,20 +107,18 @@ export default function BlogReactions() {
   const users = data?.users as User[];
   if (reactions === undefined) reactions = types;
   return (
-    <div className="mt-12 px-8 lg:mt-0 lg:w-1/4 lg:px-0">
-      <div className="sticky top-12 flex flex-col">
-        <h1 className="mb-6 text-center font-medium uppercase tracking-widest">Reactions</h1>
-        <div className="grid grid-cols-2 gap-4 ">
-          {reactions?.map((react) => (
-            <Reaction
-              reaction={react}
-              users={users}
-              key={react.name}
-              loading={data === undefined}
-              slug={router.query.slug as string}
-            />
-          ))}
-        </div>
+    <div className="flex flex-col">
+      <h1 className="mb-6 text-center font-medium uppercase tracking-widest">Reactions</h1>
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-2 ">
+        {reactions?.map((react) => (
+          <Reaction
+            reaction={react}
+            users={users}
+            key={react.name}
+            loading={data === undefined}
+            slug={router.query.slug as string}
+          />
+        ))}
       </div>
     </div>
   );

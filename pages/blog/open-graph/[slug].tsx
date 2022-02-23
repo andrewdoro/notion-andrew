@@ -70,7 +70,7 @@ const OpenGraphImage = ({ page }: { page: Post }) => {
             <div className="flex flex-col">
               <p className="text-3xl font-semibold text-white">Andrew Dorobantu</p>
               <p className="text-2xl font-thin tracking-widest text-white text-opacity-80">
-                Designer
+                Web Developer
               </p>
             </div>
           </div>
