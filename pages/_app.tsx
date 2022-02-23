@@ -16,12 +16,7 @@ import { AnimatePresence } from 'framer-motion';
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
-    if (router.pathname !== '/') {
-      setLoading(false);
-      return;
-    }
     const timer = setTimeout(() => setLoading(false), 2250);
     return () => clearTimeout(timer);
   }, [router]);
@@ -53,7 +48,9 @@ function MyApp({ Component, pageProps, router }: AppProps) {
               cardType: 'summary_large_image',
             }}
           />
-          <AnimatePresence exitBeforeEnter>{loading && <LoadingScreen />}</AnimatePresence>
+          <AnimatePresence exitBeforeEnter>
+            {router.pathname === '/' && loading && <LoadingScreen />}
+          </AnimatePresence>
 
           <Layout>
             <Component {...pageProps} />

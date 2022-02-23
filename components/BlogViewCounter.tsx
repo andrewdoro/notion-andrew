@@ -1,4 +1,4 @@
-import { motion, Transition, Variants } from 'framer-motion';
+import { AnimatePresence, motion, Transition, Variants } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 
@@ -32,7 +32,7 @@ export default function BlogViewCounter({
     if (register) registerView();
   }, [slug, register]);
   return (
-    <div className="relative flex items-center gap-2">
+    <div className="relative flex  items-center gap-2">
       <svg
         className="h-6 w-6"
         fill="currentColor"
@@ -45,32 +45,41 @@ export default function BlogViewCounter({
           clipRule="evenodd"
         />
       </svg>
-      {!loading ? (
-        <p className="tracking-wide">{views.toLocaleString()} views</p>
-      ) : (
-        <motion.div
-          className="flex gap-1 rounded-full  py-1 px-2 "
-          variants={ContainerVariants}
-          initial="initial"
-          animate="animate">
+      <AnimatePresence exitBeforeEnter>
+        {!loading ? (
+          <motion.p
+            initial={{ x: 20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            className="tracking-wide">
+            {views.toLocaleString()} views
+          </motion.p>
+        ) : (
           <motion.div
-            className="h-2 w-2 rounded-full bg-yellow-500"
-            transition={DotTransition}
-            variants={DotVariants}></motion.div>
-          <motion.div
-            className="h-2 w-2 rounded-full bg-red-500"
-            transition={DotTransition}
-            variants={DotVariants}></motion.div>
-          <motion.div
-            className="h-2 w-2 rounded-full bg-green-500"
-            transition={DotTransition}
-            variants={DotVariants}></motion.div>
-          <motion.div
-            className="h-2 w-2 rounded-full bg-blue-500"
-            transition={DotTransition}
-            variants={DotVariants}></motion.div>
-        </motion.div>
-      )}
+            className="flex gap-1 rounded-full  py-1 px-2 "
+            variants={ContainerVariants}
+            initial="initial"
+            exit="exit"
+            key="dots"
+            animate="animate">
+            <motion.div
+              className="h-2 w-2 rounded-full bg-yellow-500"
+              transition={DotTransition}
+              variants={DotVariants}></motion.div>
+            <motion.div
+              className="h-2 w-2 rounded-full bg-red-500"
+              transition={DotTransition}
+              variants={DotVariants}></motion.div>
+            <motion.div
+              className="h-2 w-2 rounded-full bg-green-500"
+              transition={DotTransition}
+              variants={DotVariants}></motion.div>
+            <motion.div
+              className="h-2 w-2 rounded-full bg-blue-500"
+              transition={DotTransition}
+              variants={DotVariants}></motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -84,6 +93,9 @@ const ContainerVariants: Variants = {
     transition: {
       staggerChildren: 0.2,
     },
+  },
+  exit: {
+    opacity: 0,
   },
 };
 const DotVariants: Variants = {
