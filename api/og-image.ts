@@ -26,7 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const relativeUrl = (req.query['path'] as string) || '';
   const url = getAbsoluteURL(relativeUrl);
   await page.goto(url, {
-    timeout: 15 * 1000,
+    timeout: 20 * 1000,
     // waitUntil option will make sure everything is loaded on the page
     waitUntil: 'networkidle',
   });

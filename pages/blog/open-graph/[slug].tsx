@@ -50,6 +50,7 @@ const OpenGraphImage = ({ page }: { page: Post }) => {
           <Image
             src={PropertyImage(Cover)}
             layout="fill"
+            priority
             alt={Slug.rich_text[0].plain_text}
             objectFit="cover"
           />

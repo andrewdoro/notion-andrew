@@ -54,8 +54,8 @@ const Reaction = ({
       bg-zinc-100 bg-opacity-30 p-2 dark:bg-zinc-900 dark:bg-opacity-70 ">
       <div
         className={cn(
-          liked ? 'grayscale-0' : 'grayscale',
-          'z-20 text-2xl group-hover:grayscale-0 md:text-4xl'
+          liked ? 'grayscale-[0%]' : 'grayscale-[100%]',
+          'z-20 text-2xl transition-all duration-500 group-hover:grayscale-0 md:text-4xl'
         )}>
         {reaction.emoji}
       </div>
