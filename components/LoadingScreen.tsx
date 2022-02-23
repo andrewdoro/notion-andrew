@@ -5,21 +5,16 @@ const LoadingScreen = () => {
 
   useEffect(() => {
     async function sequence() {
-      console.log('xd');
-      await controls.start({ pathLength: 0, fillOpacity: 0 });
       await controls.start({ pathLength: 1 });
       await controls.start({ fillOpacity: 1 });
     }
-
-    const timer = setInterval(() => sequence(), 3000);
-    return () => {
-      clearInterval(timer);
-    };
+    sequence();
   }, [controls]);
   return (
     <motion.div
       className="fixed z-[200] flex h-screen w-screen items-center justify-center bg-zinc-900"
-      exit={{ opacity: 0, scale: 2 }}>
+      exit={{ y: '-100vh' }}
+      transition={{ duration: 0.5, ease: 'easeInOut' }}>
       <div className="flex items-center justify-center text-red-500">
         <motion.svg
           xmlns="http://www.w3.org/2000/svg"

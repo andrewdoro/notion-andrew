@@ -17,7 +17,7 @@ export default function BlogViewCounter({
   const { data } = useSWR(`/api/views/${slug}`, fetcher);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(data === undefined), 1250);
+    const timer = setTimeout(() => setLoading(data === undefined), 750);
     return () => {
       clearTimeout(timer);
     };

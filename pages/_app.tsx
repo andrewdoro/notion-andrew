@@ -12,6 +12,7 @@ import { AuthProvider } from '../components/context/auth';
 import CustomCursorProvider from '../components/context/cursor';
 import CustomCusor from 'components/CustomCursor';
 import Layout from 'layouts/Layout';
+import { AnimatePresence } from 'framer-motion';
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   const [loading, setLoading] = useState(true);
@@ -21,7 +22,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
       setLoading(false);
       return;
     }
-    const timer = setTimeout(() => setLoading(false), 2000);
+    const timer = setTimeout(() => setLoading(false), 2250);
     return () => clearTimeout(timer);
   }, [router]);
   return (
@@ -52,7 +53,8 @@ function MyApp({ Component, pageProps, router }: AppProps) {
               cardType: 'summary_large_image',
             }}
           />
-          {loading && <LoadingScreen />}
+          <AnimatePresence exitBeforeEnter>{loading && <LoadingScreen />}</AnimatePresence>
+
           <Layout>
             <Component {...pageProps} />
           </Layout>
