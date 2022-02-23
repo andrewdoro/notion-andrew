@@ -10,6 +10,10 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+          <meta
+            name="google-site-verification"
+            content="bX2rOr1ZTGnMQjJuiawplzpM5Bw7c8jHlV4WFjYjLRc"
+          />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link
