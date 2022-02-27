@@ -6,6 +6,7 @@ import { CustomCursorContext } from './context/cursor';
 import dark from 'prism-react-renderer/themes/nightOwl';
 import light from 'prism-react-renderer/themes/nightOwlLight';
 import { useTheme } from 'next-themes';
+import BookmarkBlock from './BookmarkBlock';
 
 const SpanText = ({ text, id }: { text: RichTextText[]; id: string }) => {
   if (!text) return null;
@@ -188,7 +189,7 @@ export const BlockContent = ({ block }: { block: Block }) => {
           language="jsx">
           {({ tokens, getLineProps, getTokenProps }) => (
             <pre
-              className="mt-8 mb-8 overflow-auto rounded-lg bg-white bg-opacity-50 p-4 text-sm dark:bg-black dark:bg-opacity-20"
+              className="mt-8 mb-8 overflow-auto rounded-lg bg-white bg-opacity-50 p-4  dark:bg-black dark:bg-opacity-20"
               onMouseEnter={() => setType('none')}
               onMouseLeave={() => setType('default')}>
               {tokens.map((line, i) => (
@@ -202,6 +203,8 @@ export const BlockContent = ({ block }: { block: Block }) => {
           )}
         </Highlight>
       );
+    case 'bookmark':
+      return <BookmarkBlock url={block.bookmark.url} />;
     default:
       return (
         <div>

@@ -31,7 +31,7 @@ const BlogPostCard = ({ post }: { post: Post }) => {
         />
         <div className="flex flex-col gap-2 bg-zinc-50 p-4 dark:bg-zinc-900 sm:h-52  lg:h-60 lg:w-1/2  ">
           <h3 className="text-xl font-semibold ">{Post.title[0].plain_text}</h3>
-          <p className="text-sm text-gray-700 line-clamp-4 dark:text-gray-300">
+          <p className="text-sm text-gray-700 line-clamp-3 dark:text-gray-300">
             {Description.rich_text[0].plain_text}
           </p>
           <div className="mt-auto flex items-center pt-4">

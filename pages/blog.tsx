@@ -62,7 +62,7 @@ const Projects: ProjectsPage = ({ posts }) => {
   return (
     <>
       <NextSeo
-        title="Blog - Andrew Dorobantu"
+        title="Blog"
         description="Thoughts on the software industry, programming, tech, politics, society, and my personal life."
         canonical={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/blog`}
       />

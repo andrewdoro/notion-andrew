@@ -25,7 +25,9 @@ function MyApp({ Component, pageProps, router }: AppProps) {
       <CustomCursorProvider>
         <AuthProvider>
           <DefaultSeo
-            title="Andrew Dorobantu"
+            title=""
+            defaultTitle="Andrew Dorobantu - Front-end developer"
+            titleTemplate="%s - Andrew Dorobantu"
             description="Front-end developer, currently living in Cluj-Napoca."
             canonical={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}`}
             openGraph={{

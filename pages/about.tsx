@@ -17,7 +17,7 @@ const About: Page = () => {
   return (
     <>
       <NextSeo
-        title="About - Andrew Dorobantu"
+        title="About"
         canonical={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/about`}
         description="Hello, I'm Andrew, a self-taught front-end developer, currently living in Cluj-Napoca."
       />

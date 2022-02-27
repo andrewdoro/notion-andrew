@@ -17,7 +17,7 @@
     "framer-motion": "^6.2.4",
     "next": "latest",
     "next-seo": "^5.0.0",
-    "next-share": "^0.13.0",
+    "next-share": "^0.12.1",
     "next-sitemap": "^2.1.14",
     "next-themes": "^0.0.15",
     "node-vibrant": "^3.1.6",
@@ -28,7 +28,8 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
-    "swr": "^1.2.1"
+    "swr": "^1.2.1",
+    "unfurl.js": "^5.6.3"
   },
   "devDependencies": {
     "@tailwindcss/line-clamp": "^0.3.1",
