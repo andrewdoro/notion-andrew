@@ -15,7 +15,9 @@
   "rules": {
     "@typescript-eslint/ban-types": "off",
     "@typescript-eslint/no-explicit-any": "off",
-    "no-console": "warn"
+    "no-console": "warn",
+    "@next/next/no-img-element": "off"
+
   },
   "ignorePatterns": "/api",
   "plugins": ["@typescript-eslint"]

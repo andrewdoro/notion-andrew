@@ -28,7 +28,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
             title=""
             defaultTitle="Andrew Dorobantu - Front-end developer"
             titleTemplate="%s - Andrew Dorobantu"
-            description="Front-end developer, currently living in Cluj-Napoca."
+            description="I am a Front-end developer, currently living in Cluj-Napoca. I strive to learn the best technologies in the field of web development. Using Next.js and TailwindCSS as basics, I possess good problem-solving skills and innovative ideas."
             canonical={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}`}
             openGraph={{
               type: 'website',
