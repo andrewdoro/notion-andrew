@@ -3,12 +3,23 @@ import BlogReactions from 'components/BlogReactions';
 import BlogViewCounter from 'components/BlogViewCounter';
 import { getAbsoluteURL } from 'lib/useOpenGraphImage';
 import { NextSeo } from 'next-seo';
-import Image from 'next/image';
+import Image, { ImageLoaderProps } from 'next/image';
 import { PropsWithChildren } from 'react';
 import { Post } from 'types';
 import { FacebookShareButton, LinkedinShareButton, TwitterShareButton } from 'next-share';
 import { SiFacebook, SiLinkedin, SiTwitter } from 'react-icons/si';
-
+const imageKitLoader = ({ src, width, quality }: ImageLoaderProps) => {
+  if (src[0] === '/') src = src.slice(1);
+  const params = [`w-${width}`];
+  if (quality) {
+    params.push(`q-${quality}`);
+  }
+  const paramsString = params.join(',');
+  let urlEndpoint = src;
+  if (urlEndpoint[urlEndpoint.length - 1] === '/')
+    urlEndpoint = urlEndpoint.substring(0, urlEndpoint.length - 1);
+  return `${urlEndpoint}/?tr=${paramsString}`;
+};
 export default function BlogLayout({
   children,
   page,
@@ -42,14 +53,14 @@ export default function BlogLayout({
           ],
         }}
       />
-      <article className="mx-auto mt-24 flex max-w-6xl flex-col pb-12 lg:flex-row lg:gap-8 lg:px-4">
-        <div className="min-w-0 lg:w-3/4">
+      <article className="mx-auto mt-24 flex max-w-5xl flex-col pb-12 lg:flex-row lg:gap-8 lg:px-4">
+        <div className="mx-auto w-full min-w-0 max-w-2xl ">
           <div className="flex flex-col items-center px-4 lg:px-0">
             <h1 className="text-center text-3xl font-bold tracking-tight text-black dark:text-white md:text-5xl">
               {Post.title[0].plain_text}
             </h1>
-            <div className="mb-4 flex items-center gap-5 py-4">
-              <span className=" text-gray-700 dark:text-gray-300">
+            <div className="mb-4 flex items-center gap-5 py-4 ">
+              <span className="text-gray-700 dark:text-gray-300">
                 {new Date(date.date?.start as string).toLocaleString('en-US', {
                   month: 'long',
                   day: '2-digit',
@@ -59,13 +70,14 @@ export default function BlogLayout({
               <BlogViewCounter slug={Slug.rich_text[0].plain_text} register={true} />
             </div>
 
-            <div className="relative mb-6 h-[50vh] w-full ">
+            <div className="relative mb-6 h-[40vh] w-full md:h-[50vh] ">
               <Image
                 layout="fill"
                 src={imageSrc}
                 objectFit="cover"
                 placeholder="blur"
                 priority
+                loader={imageKitLoader}
                 blurDataURL={imageSrc + '?tr=n-blur_thumbnail'}
                 className="rounded-xl"
                 alt={Post.title[0].plain_text}
@@ -75,7 +87,7 @@ export default function BlogLayout({
 
           {children}
         </div>
-        <div className="mt-12 flex flex-col px-4 lg:-mt-24 lg:w-1/4 lg:px-0">
+        <div className="mx-auto flex w-full max-w-2xl flex-col px-4 lg:w-1/4 lg:px-0">
           <div className="sticky top-0 flex flex-col justify-center lg:h-screen">
             <BlogReactions />
             <div className="mt-12 flex flex-col">

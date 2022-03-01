@@ -9,7 +9,7 @@ import { getNotionData } from '../lib/getNotionData';
 import { PropertyValueFiles, HomePage, Post } from '../types';
 import { useContext } from 'react';
 import { CustomCursorContext } from 'components/context/cursor';
-import { BiPyramid } from 'react-icons/bi';
+import { Logo } from 'components/Icons';
 
 const Home: HomePage = ({ posts }) => {
   const { setType } = useContext(CustomCursorContext);
@@ -40,20 +40,13 @@ const Home: HomePage = ({ posts }) => {
               , a front-end developer.
             </h1>
           </div>
-          <div className="mt-4 flex flex-col">
-            <h2 className="text-2xl font-bold tracking-tight text-gray-500 dark:text-gray-400 lg:px-24  lg:text-3xl xl:text-4xl ">
-              I love to share my
-              <span className="block">
-                <span className="block">knowledge </span> through{' '}
-                <span className="relative block">
-                  code
-                  <BiPyramid className="absolute inset-x-0 -bottom-4 mx-auto rotate-180 lg:-bottom-6" />
-                </span>
-                .
-              </span>
-            </h2>
-            <p className="relative mx-auto mt-8 max-w-xs text-sm tracking-widest text-gray-400">
-              Check out a few of my most recent{' '}
+          <div className="relative flex flex-col">
+            <div className="top-0 left-0 mx-auto mt-4 mb-4 h-8 w-8 fill-red-500 opacity-30">
+              <Logo />
+            </div>
+
+            <p className="relative mx-auto max-w-lg text-lg tracking-widest text-gray-700 dark:text-gray-400 md:text-xl">
+              I love to share my knowledge through code. Check out a few of my most recent{' '}
               <Link href="/blog">
                 <a
                   className="text-red-500 underline"

@@ -14,7 +14,7 @@ const LoadingScreen = () => {
     <motion.div
       className="fixed z-[200] flex h-screen w-screen items-center justify-center bg-zinc-900"
       exit={{ y: '-100vh' }}
-      transition={{ duration: 0.5 , ease: 'easeInOut' }}>
+      transition={{ duration: 0.5, ease: 'easeInOut' }}>
       <div className="flex items-center justify-center text-red-500">
         <motion.svg
           xmlns="http://www.w3.org/2000/svg"
@@ -27,7 +27,7 @@ const LoadingScreen = () => {
             strokeLinecap="round"
             strokeLinejoin="round"
             initial={{ pathLength: 0, fillOpacity: 0 }}
-            strokeWidth={2}
+            strokeWidth={4}
             transition={{
               duration: 1,
               ease: 'easeInOut',

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Highlight, { defaultProps } from 'prism-react-renderer';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { PropertyValueFiles, Block, RichTextText, ImageBlock, BlockImage } from 'types';
 import { CustomCursorContext } from './context/cursor';
 import dark from 'prism-react-renderer/themes/nightOwl';
@@ -25,12 +25,14 @@ const SpanText = ({ text, id }: { text: RichTextText[]; id: string }) => {
               code ? 'font-mono rounded-xs bg-zinc-100 p-1 text-sm dark:bg-zinc-800' : '',
               italic ? 'italic' : '',
               strikethrough ? 'line-through' : '',
-              underline ? 'underline' : '',
+              underline && 'underline',
               'leading-7 text-black dark:text-white',
             ].join(' ')}
             style={color !== 'default' ? { color } : {}}>
             {text.link ? (
-              <a href={text.link.url} className="underline">
+              <a
+                className=" bg-growing-underline bg-gradient-to-t from-red-500 to-red-500 hover:text-white   "
+                href={text.link.url}>
                 {text.content}
               </a>
             ) : (
@@ -52,7 +54,7 @@ export const Text = ({ text, id }: { text: RichTextText[]; id: string }) => {
 };
 export const ListItem = ({ text, id }: { text: RichTextText[]; id: string }) => {
   return (
-    <li className="text-gray-700 dark:text-gray-200">
+    <li className="ml-4 text-gray-700 dark:text-gray-200">
       <SpanText text={text} id={id} />
     </li>
   );
@@ -109,7 +111,7 @@ export const Toggle = ({
   blockChildren: Block[];
 }) => {
   return (
-    <details>
+    <details className="mt-4">
       <summary className="cursor-pointer">{text[0].text.content}</summary>
       {(blockChildren as Block[])?.map((block) => {
         if (block.type === 'paragraph') {
@@ -125,6 +127,10 @@ export const Toggle = ({
 export const BlockContent = ({ block }: { block: Block }) => {
   const { type, id } = block;
   const { setType } = useContext(CustomCursorContext);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   const { resolvedTheme } = useTheme();
   switch (type) {
     case 'paragraph':
@@ -177,34 +183,72 @@ export const BlockContent = ({ block }: { block: Block }) => {
               blurDataURL={imageSrc + '?tr=n-blur_thumbnail'}
             />
           </div>
-          {caption && <figcaption className="mt-2">{caption}</figcaption>}
+          {caption && (
+            <figcaption className="text-sm italic text-gray-600  dark:text-gray-300">
+              {caption}
+            </figcaption>
+          )}
         </figure>
       );
     case 'code':
+      const route = block.code.caption.length ? block.code.caption[0].plain_text : '';
       return (
-        <Highlight
-          {...defaultProps}
-          code={block.code.text[0].plain_text}
-          theme={resolvedTheme === 'light' ? light : dark}
-          language="jsx">
-          {({ tokens, getLineProps, getTokenProps }) => (
-            <pre
-              className="mt-8 mb-8 overflow-auto rounded-lg bg-white bg-opacity-50 p-4  dark:bg-black dark:bg-opacity-20"
-              onMouseEnter={() => setType('none')}
-              onMouseLeave={() => setType('default')}>
-              {tokens.map((line, i) => (
-                <div key={i} {...getLineProps({ line, key: i })}>
-                  {line.map((token, key) => (
-                    <span key={key} {...getTokenProps({ token, key })} />
-                  ))}
-                </div>
-              ))}
-            </pre>
+        <>
+          {route && (
+            <div className="flex items-center gap-4 rounded-t-lg bg-red-100 p-3  dark:bg-red-900">
+              <span className="h-4 w-4 rounded-full bg-red-500" />
+              <p className="text-sm font-semibold  tracking-wide">{route}</p>
+            </div>
           )}
-        </Highlight>
+          <Highlight
+            key={block.id}
+            {...defaultProps}
+            code={block.code.text[0].plain_text}
+            theme={mounted && resolvedTheme === 'light' ? light : dark}
+            language="jsx">
+            {({ tokens, getLineProps, getTokenProps }) => (
+              <pre
+                className="mb-8 overflow-auto  rounded-b-lg bg-white bg-opacity-50 p-4  dark:bg-black dark:bg-opacity-20"
+                onMouseEnter={() => setType('none')}
+                onMouseLeave={() => setType('default')}>
+                {tokens.map((line, i) => (
+                  <div key={i} {...getLineProps({ line, key: i })}>
+                    {line.map((token, key) => (
+                      <span key={key} {...getTokenProps({ token, key })} />
+                    ))}
+                  </div>
+                ))}
+              </pre>
+            )}
+          </Highlight>
+        </>
       );
     case 'bookmark':
       return <BookmarkBlock url={block.bookmark.url} />;
+    case 'embed':
+      return (
+        <iframe
+          src={block.embed.url}
+          style={{
+            width: '100%',
+            height: '500px',
+            marginBottom: '16px',
+            border: 0,
+            borderRadius: '8px',
+            overflow: 'hidden',
+          }}
+          allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+          sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
+      );
+    case 'callout':
+      return (
+        <div className="mb-4 flex w-full items-center gap-4 rounded-lg p-4 dark:bg-zinc-800">
+          {block.callout.icon?.type === 'emoji' && (
+            <p className="text-2xl">{block.callout.icon.emoji}</p>
+          )}
+          <SpanText id={block.id} text={block.callout.text as RichTextText[]} />
+        </div>
+      );
     default:
       return (
         <div>

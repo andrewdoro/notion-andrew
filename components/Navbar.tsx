@@ -125,9 +125,9 @@ export default function Navbar() {
     <>
       <button
         aria-label="Menu"
-        className=" fixed top-0 left-0 z-[90] m-6 flex rounded-full bg-red-100
-        p-3 text-2xl ring-red-400 transition-shadow
-        hover:ring-2 dark:bg-red-900 dark:ring-red-300 lg:hidden"
+        className=" fixed top-0 left-0 z-[90] m-6 flex rounded-full bg-zinc-100
+        p-3 text-2xl shadow-lg ring-zinc-400
+        hover:ring-2 dark:bg-zinc-900 dark:ring-zinc-300 lg:hidden"
         onClick={() => setOpen(true)}>
         <MenuIcon />
       </button>

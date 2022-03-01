@@ -3,24 +3,47 @@ import { getNotionData, getPage, getBlocks } from '../../lib/getNotionData';
 
 import { BlockContent, hasKey } from '../../components/ContentBlocks';
 
-import { PropertyValueRichText, BlogPost } from 'types';
+import { PropertyValueRichText, BlogPost, Block } from 'types';
 
 import { ParsedUrlQuery } from 'querystring';
 import BlogLayout from 'layouts/BlogLayout';
 import useOpenGraphImage from 'lib/useOpenGraphImage';
+import { useRef } from 'react';
 
 const Post: BlogPost = ({ page, blocks }) => {
   const { imageURL } = useOpenGraphImage();
-
+  const lastBlocks = useRef<{ list: Block[] }>({
+    list: [],
+  });
   if (!page || !blocks) {
     return <div />;
   }
+
   return (
     <BlogLayout page={page} openGraphImage={imageURL}>
       <div className="flex flex-col px-8 lg:px-0">
-        {blocks.map((block) => (
-          <BlockContent block={block} key={block.id} />
-        ))}
+        {blocks.map((block) => {
+          let list: Block[] = [];
+          if (block.type === 'numbered_list_item') {
+            lastBlocks.current.list = [...lastBlocks.current.list, block];
+            list = lastBlocks.current.list;
+          } else {
+            list = lastBlocks.current.list;
+            lastBlocks.current.list = [];
+          }
+          return (
+            <div key={block.id}>
+              {list.length > 0 && block.type !== 'numbered_list_item' && (
+                <ol type="1" className="list-inside list-decimal">
+                  {list.map((item) => (
+                    <BlockContent key={item.id} block={item} />
+                  ))}
+                </ol>
+              )}
+              {block.type !== 'numbered_list_item' && <BlockContent block={block} />}
+            </div>
+          );
+        })}
       </div>
     </BlogLayout>
   );

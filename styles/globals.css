@@ -14,8 +14,8 @@
     @apply bg-red-500 bg-opacity-30;
   }
   .bg-growing-underline {
-    background-size: 100% 0.2em;
-    background-position: 0 88%;
+    background-size: 100% 0.1em;
+    background-position: 0 100%;
     @apply bg-no-repeat transition-all duration-200;
   }
   .bg-growing-underline:hover {
