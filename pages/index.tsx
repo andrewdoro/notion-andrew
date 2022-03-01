@@ -58,7 +58,7 @@ const Home: HomePage = ({ posts }) => {
             </p>
           </div>
         </div>
-        <div className="grid h-[70vh] w-full grid-cols-2 grid-rows-2 md:h-screen ">
+        <div className="mt-6 grid h-[50vh] w-full grid-cols-2 grid-rows-2 sm:h-[70vh] md:mt-0 md:h-screen ">
           {posts.map((post, index) => (
             <PostCard key={post.id} post={post} last={index === posts.length - 1} />
           ))}
