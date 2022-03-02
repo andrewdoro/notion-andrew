@@ -29,8 +29,10 @@ const BlogPostCard = ({ post }: { post: Post }) => {
             opacity: 0.3,
           }}
         />
-        <div className="flex flex-col gap-2 bg-zinc-50 p-4 dark:bg-zinc-900 sm:h-52  lg:h-60 lg:w-1/2  ">
-          <h3 className="text-xl font-semibold ">{Post.title[0].plain_text}</h3>
+        <div className="flex h-full flex-col gap-2 bg-zinc-50 p-4 dark:bg-zinc-900  sm:h-60 md:h-56 lg:h-60 lg:w-1/2">
+          <h3 className="text-lg font-semibold line-clamp-3 lg:text-xl">
+            {Post.title[0].plain_text}
+          </h3>
           <p className="text-sm text-gray-700 line-clamp-3 dark:text-gray-300">
             {Description.rich_text[0].plain_text}
           </p>
@@ -47,7 +49,7 @@ const BlogPostCard = ({ post }: { post: Post }) => {
           </div>
         </div>
 
-        <div className="relative h-64 lg:h-60 lg:w-1/2 ">
+        <div className="relative h-64 md:h-48 lg:h-60 lg:w-1/2 ">
           <Image
             layout="fill"
             src={PropertyImage(Cover)}

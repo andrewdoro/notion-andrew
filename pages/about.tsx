@@ -59,21 +59,21 @@ const About: Page = () => {
             <h2 className="mt-8 text-xl font-bold tracking-tight  md:text-3xl">Follow me</h2>
             <div className="mt-6 flex gap-6">
               <a
-                className="flex rounded-full border-2 border-blue-500 p-4 text-blue-500 transition-all duration-300 hover:bg-blue-500"
+                className="flex rounded-full border-2 border-blue-500 p-4 text-blue-500 transition-all duration-300 hover:bg-blue-500 hover:text-white"
                 href="https://twitter.com/andrewdorobantu"
                 target="_blank"
                 rel="noopener noreferrer">
                 <SiTwitter className="text-3xl" />
               </a>
               <a
-                className="flex rounded-full border-2 border-red-500 p-4 text-red-500 transition-all duration-300  hover:bg-red-500"
+                className="flex rounded-full border-2 border-red-500 p-4 text-red-500 transition-all duration-300  hover:bg-red-500 hover:text-white"
                 href="https://github.com/andrewdoro"
                 target="_blank"
                 rel="noopener noreferrer">
                 <SiGithub className="text-3xl" />
               </a>
               <a
-                className="flex rounded-full border-2 border-amber-500 p-4 text-amber-500 transition-all duration-300 hover:bg-amber-500"
+                className="flex rounded-full border-2 border-amber-500 p-4 text-amber-500 transition-all duration-300 hover:bg-amber-500 hover:text-white"
                 href="https://www.linkedin.com/in/andrei-ovidiu-dorobantu/"
                 target="_blank"
                 rel="noopener noreferrer">

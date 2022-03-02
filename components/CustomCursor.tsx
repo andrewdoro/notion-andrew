@@ -9,7 +9,7 @@ const CustomCursor = () => {
   const { type } = useContext(CustomCursorContext);
   const router = useRouter();
   const [cursorVariant, setCursorVariant] = useState<CursorLookType>('default');
-  const [mousePositon, setMousePosition] = useState({ x: -1, y: -1 });
+  const [mousePositon, setMousePosition] = useState({ x: -100, y: -100 });
   const mobile = useMediaQuery('(max-width: 1024px)');
 
   useEffect(() => {
@@ -34,11 +34,14 @@ const CustomCursor = () => {
 
   const variantsDot: Variants = {
     default: {
+      opacity: 0,
       x: mousePositon.x - 8,
       y: mousePositon.y - 8,
+      scale: 0,
     },
     link: {
       zIndex: -1,
+      opacity: 1,
       x: mousePositon.x - 8,
       y: mousePositon.y - 8,
       scale: 5,
@@ -46,6 +49,8 @@ const CustomCursor = () => {
     none: {
       x: mousePositon.x - 8,
       y: mousePositon.y - 8,
+      opacity: 1,
+      scale: 1,
     },
   };
   const variantsRing = {
@@ -90,10 +95,8 @@ const CustomCursor = () => {
           </div>
           <motion.div
             className={cn(
-              'pointer-events-none fixed z-[102] h-4 w-4 rounded-full transition-colors ',
-              cursorVariant === 'link' ? 'bg-black dark:bg-white' : 'bg-red-500',
-              cursorVariant === 'none' &&
-                'dark:bg-dark bg-black bg-opacity-10 dark:bg-white dark:bg-opacity-10'
+              'pointer-events-none fixed z-[102] h-4 w-4 rounded-full bg-black transition-colors dark:bg-white',
+              cursorVariant === 'none' && 'dark:bg-dark bg-opacity-10  dark:bg-opacity-10'
             )}
             variants={variantsDot}
             animate={cursorVariant}

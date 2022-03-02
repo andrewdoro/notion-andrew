@@ -87,13 +87,11 @@ export default function BlogLayout({
 
           {children}
         </div>
-        <div className="mx-auto flex w-full max-w-2xl flex-col px-4 lg:w-1/4 lg:px-0">
+        <div className="mx-auto flex w-full max-w-2xl flex-col px-4 lg:-mt-24 lg:w-1/4 lg:px-0">
           <div className="sticky top-0 flex flex-col justify-center lg:h-screen">
             <BlogReactions />
             <div className="mt-12 flex flex-col">
-              <h1 className="mb-6  text-center font-medium uppercase tracking-widest">
-                Share Post
-              </h1>
+              <h1 className="mb-6 text-center font-medium uppercase tracking-widest">Share Post</h1>
 
               <div className="flex justify-center gap-6">
                 <TwitterShareButton
