@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { ThemeProvider } from 'next-themes';
 import type { AppProps } from 'next/app';
@@ -7,20 +7,13 @@ import { DefaultSeo } from 'next-seo';
 import 'prismjs/themes/prism-tomorrow.css';
 import '../styles/globals.css';
 
-import LoadingScreen from 'components/LoadingScreen';
 import { AuthProvider } from '../components/context/auth';
 import CustomCursorProvider from '../components/context/cursor';
 import CustomCusor from 'components/CustomCursor';
 import Layout from 'layouts/Layout';
-import { AnimatePresence } from 'framer-motion';
 import Script from 'next/script';
 
 function MyApp({ Component, pageProps, router }: AppProps) {
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 2250);
-    return () => clearTimeout(timer);
-  }, [router]);
   useEffect(() => {
     const handleRouteChange = (url: string) => {
       window.gtag('config', process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS as string, {
@@ -77,9 +70,6 @@ function MyApp({ Component, pageProps, router }: AppProps) {
               cardType: 'summary_large_image',
             }}
           />
-          <AnimatePresence exitBeforeEnter>
-            {router.pathname === '/' && loading && <LoadingScreen />}
-          </AnimatePresence>
 
           <Layout>
             <Component {...pageProps} />
