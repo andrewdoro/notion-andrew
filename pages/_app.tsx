@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 import { ThemeProvider } from 'next-themes';
 import type { AppProps } from 'next/app';
 import { DefaultSeo } from 'next-seo';
@@ -14,17 +12,6 @@ import Layout from 'layouts/Layout';
 import Script from 'next/script';
 
 function MyApp({ Component, pageProps, router }: AppProps) {
-  useEffect(() => {
-    const handleRouteChange = (url: string) => {
-      window.gtag('config', process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS as string, {
-        page_path: url,
-      });
-    };
-    router.events.on('routeChangeComplete', handleRouteChange);
-    return () => {
-      router.events.off('routeChangeComplete', handleRouteChange);
-    };
-  }, [router.events]);
   return (
     <ThemeProvider attribute="class">
       <CustomCursorProvider>
