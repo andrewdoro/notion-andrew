@@ -13,6 +13,7 @@ import CustomCursorProvider from '../components/context/cursor';
 import CustomCusor from 'components/CustomCursor';
 import Layout from 'layouts/Layout';
 import { AnimatePresence } from 'framer-motion';
+import Script from 'next/script';
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   const [loading, setLoading] = useState(true);
@@ -20,10 +21,36 @@ function MyApp({ Component, pageProps, router }: AppProps) {
     const timer = setTimeout(() => setLoading(false), 2250);
     return () => clearTimeout(timer);
   }, [router]);
+  useEffect(() => {
+    const handleRouteChange = (url: string) => {
+      window.gtag('config', process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS as string, {
+        page_path: url,
+      });
+    };
+    router.events.on('routeChangeComplete', handleRouteChange);
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
   return (
     <ThemeProvider attribute="class">
       <CustomCursorProvider>
         <AuthProvider>
+          <Script
+            strategy="lazyOnload"
+            src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+          />
+
+          <Script id="google-analytics" strategy="lazyOnload">
+            {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
+              page_path: window.location.pathname,
+            });
+                `}
+          </Script>
           <DefaultSeo
             title=""
             defaultTitle="Andrew Dorobantu - Front-end developer"
